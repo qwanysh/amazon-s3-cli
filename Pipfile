@@ -8,8 +8,10 @@ boto3 = "*"
 python-dotenv = "*"
 
 [dev-packages]
+flake8 = "<4"
 pytest = "*"
 pytest-flake8 = "*"
+flake8-isort = "*"
 
 [requires]
 python_version = "3.8"
