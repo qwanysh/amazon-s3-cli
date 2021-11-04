@@ -39,7 +39,11 @@ def get_file_extension(file_name):
 
 
 def get_content_type(file_name):
-    content_types = {'.svg': 'image/svg+xml'}
+    content_types = {
+        '.svg': 'image/svg+xml',
+        '.png': 'image/png',
+        '.jpg': 'image/jpeg',
+    }
     return content_types.get(get_file_extension(file_name))
 
 
