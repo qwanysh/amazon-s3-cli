@@ -17,7 +17,7 @@ def get_args():
     parser = argparse.ArgumentParser()
     parser.add_argument(
         'action',
-        type=action,
+        type=action_type,
         help=f"action({', '.join(actions)}) to perform",
     )
     parser.add_argument(
@@ -64,7 +64,7 @@ def upload(args):
 actions = {'upload': upload}
 
 
-def action(value):
+def action_type(value):
     if value in actions:
         return value
 
