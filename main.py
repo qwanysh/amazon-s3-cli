@@ -22,7 +22,7 @@ def get_args():
     )
     parser.add_argument(
         'file_name',
-        type=file_name,
+        type=file_name_type,
         help='file to upload',
     )
     parser.add_argument(
@@ -33,13 +33,29 @@ def get_args():
     return parser.parse_args()
 
 
+def get_file_extension(file_name):
+    _, extension = os.path.splitext(file_name)
+    return extension
+
+
+def get_content_type(file_name):
+    content_types = {'.svg': 'image/svg+xml'}
+    return content_types.get(get_file_extension(file_name))
+
+
 def upload(args):
+    extra_args = {}
+    content_type = get_content_type(args.file_name)
+
+    if content_type:
+        extra_args['ContentType'] = content_type
+
     try:
         s3_client.upload_file(
             args.file_name,
             config.AWS_BUCKET,
             args.key or args.file_name,
-            # ExtraArgs={'ContentType': 'image/svg+xml'},
+            ExtraArgs=extra_args,
         )
     except ClientError as e:
         print(e)
@@ -52,12 +68,10 @@ def action(value):
     if value in actions:
         return value
 
-    raise argparse.ArgumentTypeError(
-        f"use one of ({', '.join(actions)})",
-    )
+    raise argparse.ArgumentTypeError(f"use one of ({', '.join(actions)})")
 
 
-def file_name(value):
+def file_name_type(value):
     if os.path.isfile(value):
         return value
 
