@@ -11,7 +11,7 @@ python-dotenv = "*"
 flake8 = "<4"
 pytest = "*"
 pytest-flake8 = "*"
-flake8-isort = "*"
+flake8-import-order = "*"
 
 [requires]
 python_version = "3.8"
