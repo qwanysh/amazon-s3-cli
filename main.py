@@ -43,6 +43,7 @@ def get_content_type(file_name):
         '.svg': 'image/svg+xml',
         '.png': 'image/png',
         '.jpg': 'image/jpeg',
+        '.webp': 'image/webp',
     }
     return content_types.get(get_file_extension(file_name))
 
