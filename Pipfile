@@ -12,6 +12,7 @@ flake8 = "<4"
 pytest = "*"
 pytest-flake8 = "*"
 flake8-import-order = "*"
+flake8-multiline-containers = "*"
 
 [requires]
 python_version = "3.8"
