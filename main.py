@@ -2,7 +2,6 @@ import argparse
 import os
 
 import boto3
-from botocore.exceptions import ClientError
 
 import config
 
@@ -55,15 +54,12 @@ def upload(args):
     if content_type:
         extra_args['ContentType'] = content_type
 
-    try:
-        s3_client.upload_file(
-            args.file_name,
-            config.AWS_BUCKET,
-            args.key or args.file_name,
-            ExtraArgs=extra_args,
-        )
-    except ClientError as e:
-        print(e)
+    s3_client.upload_file(
+        args.file_name,
+        config.AWS_BUCKET,
+        args.key or args.file_name,
+        ExtraArgs=extra_args,
+    )
 
 
 actions = {'upload': upload}

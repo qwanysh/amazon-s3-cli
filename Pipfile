@@ -8,11 +8,13 @@ boto3 = "*"
 python-dotenv = "*"
 
 [dev-packages]
-flake8 = "<4"
-pytest = "*"
-pytest-flake8 = "*"
+flake8 = "*"
 flake8-import-order = "*"
 flake8-multiline-containers = "*"
+flake8-commas = "*"
+flake8-quotes = "*"
+flake8-print = "*"
+flake8-eradicate = "*"
 
 [requires]
-python_version = "3.8"
+python_version = "3.9"
