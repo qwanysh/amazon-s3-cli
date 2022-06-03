@@ -24,3 +24,9 @@ python main.py upload <file-to-upload>
 # upload with custom key
 python main.py upload <file-to-upload> -k <custom-key>
 ```
+
+#### Testing
+```bash
+# run tests
+pytest
+```
