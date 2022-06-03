@@ -1,5 +1,6 @@
 import argparse
 import os
+import mimetypes
 
 import boto3
 
@@ -17,7 +18,7 @@ def get_args():
     parser.add_argument(
         'action',
         type=action_type,
-        help=f"action({', '.join(actions)}) to perform",
+        help=f"action({', '.join(ACTIONS)}) to perform",
     )
     parser.add_argument(
         'file_name',
@@ -32,26 +33,15 @@ def get_args():
     return parser.parse_args()
 
 
-def get_file_extension(file_name):
-    _, extension = os.path.splitext(file_name)
-    return extension
-
-
 def get_content_type(file_name):
-    content_types = {
-        '.svg': 'image/svg+xml',
-        '.png': 'image/png',
-        '.jpg': 'image/jpeg',
-        '.webp': 'image/webp',
-    }
-    return content_types.get(get_file_extension(file_name))
+    content_type, _ = mimetypes.guess_type(file_name)
+    return content_type
 
 
 def upload(args):
     extra_args = {}
-    content_type = get_content_type(args.file_name)
 
-    if content_type:
+    if content_type := get_content_type(args.file_name):
         extra_args['ContentType'] = content_type
 
     s3_client.upload_file(
@@ -62,14 +52,14 @@ def upload(args):
     )
 
 
-actions = {'upload': upload}
+ACTIONS = {'upload': upload}
 
 
 def action_type(value):
-    if value in actions:
+    if value in ACTIONS:
         return value
 
-    raise argparse.ArgumentTypeError(f"use one of ({', '.join(actions)})")
+    raise argparse.ArgumentTypeError(f"use one of ({', '.join(ACTIONS)})")
 
 
 def file_name_type(value):
@@ -88,7 +78,7 @@ def main():
     args = get_args()
 
     if confirm_action():
-        actions[args.action](args)
+        ACTIONS[args.action](args)
 
 
 if __name__ == '__main__':
